@@ -1,0 +1,16 @@
+{
+  "last_generated_date": "2026-04-23",
+  "current_law": "Concentrate your forces",
+  "current_cycle_shown_count": 1,
+  "active_laws": [
+    {
+      "law": "Concentrate your forces",
+      "shown_count": 1,
+      "next_due_date": "2026-04-25",
+      "shown_dates": [
+        "2026-04-23"
+      ]
+    }
+  ],
+  "completed_laws": []
+}
