@@ -15,6 +15,8 @@ Today's Learning from 48 Laws of Power:
 - Picks from the 48 laws you provided.
 - Repeats each selected law exactly three total times on alternate days so it sticks better in memory.
 - Saves scheduling state in `learning_state.json`.
+- Saves a published send history in `history.json`.
+- Keeps recently completed laws on cooldown so they do not come back too soon after a full cycle reset.
 - Publishes the latest text file automatically through GitHub Actions at `03:00 Asia/Kolkata`.
 
 ## Repeat rule
@@ -33,6 +35,7 @@ The days in between are used for other laws, so the learning stays varied while 
 - `laws.json`: source list of 48 laws
 - `learning_state.json`: generated state file
 - `daily_learning.txt`: published output file
+- `history.json`: published day-by-day archive
 - `scripts/setup.sh`: one-command environment check
 - `scripts/generate-daily-learning.sh`: one-command generate + verify script
 - `scripts/test.sh`: one-command test runner
@@ -91,9 +94,10 @@ LAWS48_NOW_DATE=2026-04-23 ./scripts/generate-daily-learning.sh
 Once pushed to GitHub, the workflow:
 
 1. Runs every day at `03:00 Asia/Kolkata`.
-2. Regenerates `daily_learning.txt`.
-3. Verifies the output.
-4. Commits and pushes the refreshed `daily_learning.txt` and `learning_state.json`.
+2. Runs backup refreshes again at `05:00` and `07:00 Asia/Kolkata`.
+3. Regenerates `daily_learning.txt`.
+4. Verifies the output.
+5. Commits and pushes the refreshed `daily_learning.txt`, `learning_state.json`, and `history.json`.
 
 ## iPhone Shortcut setup
 
@@ -115,5 +119,6 @@ https://raw.githubusercontent.com/<github-username>/<repo-name>/main/daily_learn
 If the same law does not look right:
 
 1. Check `learning_state.json` for `current_law`, `current_cycle_shown_count`, and `active_laws`.
-2. Run the tests.
-3. If needed, simulate dates with `LAWS48_NOW_DATE` to verify the exact repeat sequence.
+2. Check `history.json` to confirm what was published on prior dates.
+3. Run the tests.
+4. If needed, simulate dates with `LAWS48_NOW_DATE` to verify the exact repeat sequence.
