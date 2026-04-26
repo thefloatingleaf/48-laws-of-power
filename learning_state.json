@@ -1,6 +1,6 @@
 {
-  "last_generated_date": "2026-04-25",
-  "current_law": "Strike the shepherd and the sheep will scatter",
+  "last_generated_date": "2026-04-26",
+  "current_law": "Win through your actions, never through argument",
   "current_cycle_shown_count": 2,
   "active_laws": [
     {
@@ -14,10 +14,11 @@
     },
     {
       "law": "Win through your actions, never through argument",
-      "shown_count": 1,
-      "next_due_date": "2026-04-26",
+      "shown_count": 2,
+      "next_due_date": "2026-04-28",
       "shown_dates": [
-        "2026-04-24"
+        "2026-04-24",
+        "2026-04-26"
       ]
     }
   ],
