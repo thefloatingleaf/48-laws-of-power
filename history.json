@@ -2,43 +2,36 @@
   {
     "date": "2026-04-23",
     "law": "Strike the shepherd and the sheep will scatter",
-    "cycle_shown_count": 1,
-    "total_cycle_target": 3
+    "law_total_appearances": 1
   },
   {
     "date": "2026-04-24",
     "law": "Win through your actions, never through argument",
-    "cycle_shown_count": 1,
-    "total_cycle_target": 3
+    "law_total_appearances": 1
   },
   {
     "date": "2026-04-25",
     "law": "Strike the shepherd and the sheep will scatter",
-    "cycle_shown_count": 2,
-    "total_cycle_target": 3
+    "law_total_appearances": 2
   },
   {
     "date": "2026-04-26",
     "law": "Win through your actions, never through argument",
-    "cycle_shown_count": 2,
-    "total_cycle_target": 3
+    "law_total_appearances": 2
   },
   {
     "date": "2026-04-27",
     "law": "Strike the shepherd and the sheep will scatter",
-    "cycle_shown_count": 3,
-    "total_cycle_target": 3
+    "law_total_appearances": 3
   },
   {
     "date": "2026-04-28",
     "law": "Win through your actions, never through argument",
-    "cycle_shown_count": 3,
-    "total_cycle_target": 3
+    "law_total_appearances": 3
   },
   {
     "date": "2026-04-29",
-    "law": "Assume formlessness",
-    "cycle_shown_count": 1,
-    "total_cycle_target": 3
+    "law": "Infection: avoid the unhappy and unlucky",
+    "law_total_appearances": 1
   }
 ]

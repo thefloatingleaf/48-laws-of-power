@@ -13,21 +13,19 @@ Today's Learning from 48 Laws of Power:
 ```
 
 - Picks from the 48 laws you provided.
-- Repeats each selected law exactly three total times on alternate days so it sticks better in memory.
+- Picks a random law, but blocks any law from repeating until ten other distinct laws have each been shown at least twice.
 - Saves scheduling state in `learning_state.json`.
 - Saves a published send history in `history.json`.
-- Keeps recently completed laws on cooldown so they do not come back too soon after a full cycle reset.
 - Publishes the latest text file automatically through GitHub Actions at `03:00 Asia/Kolkata`.
 
 ## Repeat rule
 
-The repeat pattern is:
+The repeat rule is:
 
-1. Day 1: a new random law appears.
-2. Day 3: the same law appears again.
-3. Day 5: the same law appears for the third and final time.
-
-The days in between are used for other laws, so the learning stays varied while still repeating on alternate days.
+1. A law can appear for the first time at random.
+2. Once it has appeared, it cannot become eligible again immediately.
+3. It only becomes eligible again after at least ten other distinct laws have each reached two total appearances in history.
+4. If multiple laws are eligible, the selection stays random.
 
 ## Repo structure
 
@@ -118,7 +116,7 @@ https://raw.githubusercontent.com/<github-username>/<repo-name>/main/daily_learn
 
 If the same law does not look right:
 
-1. Check `learning_state.json` for `current_law`, `current_cycle_shown_count`, and `active_laws`.
+1. Check `learning_state.json` for `current_law` and `current_law_total_appearances`.
 2. Check `history.json` to confirm what was published on prior dates.
 3. Run the tests.
-4. If needed, simulate dates with `LAWS48_NOW_DATE` to verify the exact repeat sequence.
+4. If needed, simulate dates with `LAWS48_NOW_DATE` to verify repeat eligibility.

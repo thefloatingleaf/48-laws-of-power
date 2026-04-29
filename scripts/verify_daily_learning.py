@@ -25,7 +25,7 @@ def main() -> None:
     state = json.loads(STATE_FILE.read_text(encoding="utf-8"))
     history = json.loads(HISTORY_FILE.read_text(encoding="utf-8"))
     current_law = state.get("current_law")
-    shown_count = state.get("current_cycle_shown_count")
+    total_appearances = state.get("current_law_total_appearances")
     generated_date = state.get("last_generated_date")
 
     if not current_law:
@@ -35,8 +35,8 @@ def main() -> None:
     if message != expected:
         raise SystemExit("daily_learning.txt does not match learning_state.json")
 
-    if shown_count not in (1, 2, 3):
-        raise SystemExit("current_cycle_shown_count must be 1, 2, or 3")
+    if not isinstance(total_appearances, int) or total_appearances < 1:
+        raise SystemExit("current_law_total_appearances must be a positive integer")
 
     if not history:
         raise SystemExit("history.json is empty")
@@ -46,8 +46,8 @@ def main() -> None:
         raise SystemExit("history.json latest entry date does not match learning_state.json")
     if latest_entry.get("law") != current_law:
         raise SystemExit("history.json latest entry law does not match learning_state.json")
-    if latest_entry.get("cycle_shown_count") != shown_count:
-        raise SystemExit("history.json latest entry cycle count does not match learning_state.json")
+    if latest_entry.get("law_total_appearances") != total_appearances:
+        raise SystemExit("history.json latest entry appearance count does not match learning_state.json")
 
 
 if __name__ == "__main__":
