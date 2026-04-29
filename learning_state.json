@@ -1,8 +1,17 @@
 {
-  "last_generated_date": "2026-04-28",
-  "current_law": "Win through your actions, never through argument",
-  "current_cycle_shown_count": 3,
-  "active_laws": [],
+  "last_generated_date": "2026-04-29",
+  "current_law": "Assume formlessness",
+  "current_cycle_shown_count": 1,
+  "active_laws": [
+    {
+      "law": "Assume formlessness",
+      "shown_count": 1,
+      "next_due_date": "2026-05-01",
+      "shown_dates": [
+        "2026-04-29"
+      ]
+    }
+  ],
   "completed_laws": [
     "Strike the shepherd and the sheep will scatter",
     "Win through your actions, never through argument"
