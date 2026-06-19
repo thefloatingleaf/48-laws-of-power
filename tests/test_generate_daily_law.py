@@ -80,10 +80,11 @@ class DailyLawGenerationTests(unittest.TestCase):
         self.assertNotIn("Law 1", seen_available)
         self.assertNotEqual(result["current_law"], "Law 1")
 
-    def test_law_becomes_eligible_after_ten_other_laws_have_two_appearances(self) -> None:
+    def test_law_becomes_eligible_after_ten_other_laws_have_two_appearances_once_unseen_are_exhausted(self) -> None:
         entries: list[dict[str, object]] = [{"date": "2026-04-01", "law": "Law 1", "law_total_appearances": 1}]
-        for law_number in range(2, 12):
+        for law_number in range(2, 49):
             entries.append({"date": f"2026-04-{law_number:02d}", "law": f"Law {law_number}", "law_total_appearances": 1})
+        for law_number in range(2, 12):
             entries.append({"date": f"2026-05-{law_number:02d}", "law": f"Law {law_number}", "law_total_appearances": 2})
         self.write_history(entries)
 
@@ -98,6 +99,38 @@ class DailyLawGenerationTests(unittest.TestCase):
 
         self.assertIn("Law 1", seen_available)
         self.assertEqual(result["current_law"], "Law 1")
+        self.assertEqual(result["current_law_total_appearances"], 2)
+
+    def test_deadlock_falls_back_to_least_shown_laws(self) -> None:
+        entries: list[dict[str, object]] = [
+            {"date": "2026-04-01", "law": "Law 1", "law_total_appearances": 1},
+            {"date": "2026-04-02", "law": "Law 2", "law_total_appearances": 1},
+            {"date": "2026-04-03", "law": "Law 1", "law_total_appearances": 2},
+            {"date": "2026-04-04", "law": "Law 2", "law_total_appearances": 2},
+            {"date": "2026-04-05", "law": "Law 1", "law_total_appearances": 3},
+            {"date": "2026-04-06", "law": "Law 2", "law_total_appearances": 3},
+        ]
+        for law_number in range(3, 49):
+            entries.append(
+                {
+                    "date": f"2026-05-{law_number:02d}",
+                    "law": f"Law {law_number}",
+                    "law_total_appearances": 1,
+                }
+            )
+        self.write_history(entries)
+
+        seen_available: list[str] = []
+
+        def choose_first(available: list[str]) -> str:
+            seen_available.extend(available)
+            return available[0]
+
+        with patch("generate_daily_law.random.choice", side_effect=choose_first):
+            result = app.update_state_for_today(date(2026, 6, 19))
+
+        self.assertNotIn("Law 1", seen_available)
+        self.assertNotIn("Law 2", seen_available)
         self.assertEqual(result["current_law_total_appearances"], 2)
 
     def test_yesterdays_law_is_skipped_if_other_eligible_choices_exist(self) -> None:

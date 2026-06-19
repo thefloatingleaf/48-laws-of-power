@@ -78,21 +78,37 @@ def can_repeat_law(law: str, appearance_counts: Counter[str]) -> bool:
     return qualifying_other_laws >= MIN_DOUBLE_SHOWN_OTHERS_BEFORE_REPEAT
 
 
+def filter_previous_law(candidates: list[str], previous_law: str | None) -> list[str]:
+    if previous_law and len(candidates) > 1 and previous_law in candidates:
+        return [law for law in candidates if law != previous_law]
+    return candidates
+
+
 def choose_random_law(laws: list[str], history: list[dict[str, object]], previous_law: str | None) -> str:
     appearance_counts = build_appearance_counts(history)
-    available = [
+    unseen_laws = [law for law in laws if appearance_counts[law] == 0]
+    if unseen_laws:
+        return random.choice(filter_previous_law(unseen_laws, previous_law))
+
+    strict_repeat_eligible = [
         law
         for law in laws
-        if appearance_counts[law] == 0 or can_repeat_law(law, appearance_counts)
+        if can_repeat_law(law, appearance_counts)
     ]
+    strict_repeat_eligible = filter_previous_law(strict_repeat_eligible, previous_law)
+    if strict_repeat_eligible:
+        return random.choice(strict_repeat_eligible)
 
-    if previous_law and len(available) > 1 and previous_law in available:
-        available = [law for law in available if law != previous_law]
+    # Fallback when the strict rule would deadlock after all 48 laws have
+    # already been introduced at least once. Start the next round from the
+    # least-shown laws so coverage stays as even as possible.
+    least_count = min(appearance_counts[law] for law in laws)
+    least_shown_laws = [law for law in laws if appearance_counts[law] == least_count]
+    least_shown_laws = filter_previous_law(least_shown_laws, previous_law)
+    if least_shown_laws:
+        return random.choice(least_shown_laws)
 
-    if not available:
-        raise RuntimeError("No eligible laws available to schedule")
-
-    return random.choice(available)
+    raise RuntimeError("No eligible laws available to schedule")
 
 
 def render_message(law: str) -> str:
@@ -128,7 +144,8 @@ def update_state_for_today(today: date) -> dict[str, object]:
         "current_law_total_appearances": total_appearances,
         "repeat_rule": (
             "No law becomes eligible again until ten other distinct laws "
-            "have each been shown at least twice."
+            "have each been shown at least twice. If that would leave no "
+            "possible law, the generator falls back to the least-shown laws."
         ),
     }
     OUTPUT_FILE.write_text(render_message(selected_law), encoding="utf-8")

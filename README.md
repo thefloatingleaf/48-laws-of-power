@@ -14,6 +14,7 @@ Today's Learning from 48 Laws of Power:
 
 - Picks from the 48 laws you provided.
 - Picks a random law, but blocks any law from repeating until ten other distinct laws have each been shown at least twice.
+- If that strict rule would leave no possible next law, it falls back to the least-shown laws so the daily schedule never stalls.
 - Saves scheduling state in `learning_state.json`.
 - Saves a published send history in `history.json`.
 - Publishes the latest text file automatically through GitHub Actions at `03:00 Asia/Kolkata`.
@@ -25,7 +26,8 @@ The repeat rule is:
 1. A law can appear for the first time at random.
 2. Once it has appeared, it cannot become eligible again immediately.
 3. It only becomes eligible again after at least ten other distinct laws have each reached two total appearances in history.
-4. If multiple laws are eligible, the selection stays random.
+4. If that gate would produce no valid next law, the generator falls back to the least-shown laws.
+5. If multiple laws are eligible, the selection stays random.
 
 ## Repo structure
 
