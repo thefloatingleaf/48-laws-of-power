@@ -733,5 +733,10 @@
     "date": "2026-09-21",
     "law": "Concentrate your forces",
     "law_total_appearances": 5
+  },
+  {
+    "date": "2026-09-22",
+    "law": "Do not build fortresses to protect yourself-isolation is dangerous",
+    "law_total_appearances": 4
   }
 ]
